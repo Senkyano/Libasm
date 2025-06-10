@@ -12,29 +12,18 @@
 
 bits 64
 
-section .text
-	string db "Hello 42World!", 0;	string contains 14 bytes of caracters
+section .text ;						excutable code
+	global ft_strlen
 
-global _start
-	_start:      ;					similar of void main()
-		mov rdi, string;			mov rdi to point on string
-		call ft_strlen;				call my function ft_strlen
+	; Function ft_strlen
+	ft_strlen:
+		xor rax, rax; 				Initialised registre rax to 0
 
-;	at this points we have the value of ft_strlen in rax and now we can use
+	.loop:
+		cmp	byte [rdi + rax], 0; 	Compare the pointer + index to compare if this bytes equal NULL or 0
+		je	.return; 					if is this equal go to return
+		inc	rax; 					increment len of the string with registre
+		jmp	.loop; 					go to .loop
 
-		mov rax, 60	;				Number of call system for exit
-		xor rdi, rdi	;		Initialised register rdi to 0
-		syscall ;					We call the system core
-
-; Function ft_strlen
-ft_strlen:
-	xor rax, rax; 				Initialised registre rax to 0
-
-.loop:
-	cmp	byte [rdi + rax], 0; 	Compare the pointer + index to compare if this bytes equal NULL or 0
-	je	.return; 					if is this equal go to return
-	inc	rax; 					increment len of the string with registre
-	jmp	.loop; 					go to .loop
-
-.return:
-	ret ; 						return
+	.return:
+		ret ; 						return
