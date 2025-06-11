@@ -17,6 +17,9 @@ section .text ;						excutable code
 
 	; Function ft_strlen
 	ft_strlen:
+		cmp rdi, 0
+		je .null_pointer
+
 		xor rax, rax; 				Initialised registre rax to 0
 
 	.loop:
@@ -27,3 +30,7 @@ section .text ;						excutable code
 
 	.return:
 		ret ; 						return
+
+	.null_pointer:
+		mov rax, -1
+		ret

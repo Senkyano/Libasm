@@ -12,13 +12,29 @@
 
 bits 64
 
-section .text
-	string1 db "mastermind", 0
-	string2 db "masternind", 0
+; rdi pointer first string
+; rsi pointer second string
 
-global section
-	_start:
-		mov rdi, string1
-		mov rsi, string2
-		call ft_strcmp
+global ft_strcmp
+	ft_strcmp:
+		xor al, al;									initialised al
+		xor rcx, rcx;								initialised rcx to 0
+	
+	.loop:
+		mov al, byte [rdi + rcx];						we can't cmp a memory to memory that why we need to put in a register
+		mov bl, byte [rsi + rcx];
+
+		cmp	al, 0
+		je	.end_function ; 							Jump if equal 0 to end_function
+		cmp	bl, 0
+		je	.end_function
+		cmp al, bl
+		jne	.end_function
+
+		inc	rcx
+		jmp	.loop
+
+	.end_function: ;									return a 8bits memory = char
+		sub al, bl
+		ret
 
