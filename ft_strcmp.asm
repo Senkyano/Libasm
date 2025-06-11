@@ -35,6 +35,9 @@ global ft_strcmp
 		jmp	.loop
 
 	.end_function: ;									return a 8bits memory = char
-		sub al, bl
+		movzx eax, al
+		movzx ebx, bl
+
+		sub eax, ebx
 		ret
 
