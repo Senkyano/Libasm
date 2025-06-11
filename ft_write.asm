@@ -15,10 +15,9 @@ bits 64
 ;1	sys_write	unsigned int fd	const char *buf	size_t count
 ; tout est deja envoye dans les registre adequat suivant la norme de c
 
-extern errno	;			variable in libc
-
 section .text ;				section excutable code
 	global ft_write
+	extern errno	;			variable in libc
 
 	ft_write:
 		mov rax, 1

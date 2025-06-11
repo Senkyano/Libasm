@@ -12,13 +12,12 @@
 
 bits 64
 
-extern errno;					variable in libc
-
 section .bss ;				data non initialised
 	buffer resb 1024;			buffer tampon
 
 section .text
 	global	ft_read
+	extern errno;					variable in libc
 
 	ft_read:
 		cmp rdx, 0;				check if rdx size of octed need to read different of 0
