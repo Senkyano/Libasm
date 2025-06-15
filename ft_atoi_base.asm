@@ -19,8 +19,6 @@ section .bss
 	original_number		resq 1;			original_number
 	working_number		resq 1;			copy number
 
-extern	ft_strlen, malloc, free;					can call outside function
-
 ;						rdi = integer
 ;						rsi = base convert to
 ;					if using this function you need to free this string at end of your
@@ -28,6 +26,7 @@ extern	ft_strlen, malloc, free;					can call outside function
 
 section .text
 	global ft_atoi_base
+	extern	ft_strlen, malloc, free, __errno_location;					can call outside function
 
 	ft_atoi_base:
 		cmp	rdi, 0;					if the first string is null the number to convert
@@ -42,10 +41,10 @@ section .text
 		mov [len_base], rax
 		xor rcx, rcx
 
-	.len_string:
+	.len_string:;							len for int convert in to string
 		mov	rax, [working_number]
 		test rax, rax
-		je	.convert_number
+		je	.malloc_number
 
 		xor rdx, rdx
 		mov	rbx, [len_base];				divided by len_base
@@ -54,14 +53,25 @@ section .text
 		inc rcx;							len of string number
 		jmp .len_string
 
-	.convert_number
+	.malloc_number:
 		inc	rcx
 		mov rdi, rcx
 		call malloc
 
+		test rax, rax
+		je	.null_malloc
+
 	.return:
 		ret
 
-	.null_pointer:
+	.null_malloc:
+		mov dword [rel __errno_location], 12; error if malloc failed or if don't have enough space
 		xor rax, rax
 		ret
+
+	.null_pointer:
+		mov dword [rel __errno_location], 6;		none address
+		xor rax, rax
+		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

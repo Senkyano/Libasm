@@ -14,7 +14,7 @@ bits 64
 
 section .text
 	global	ft_strdup
-	extern malloc, errno
+	extern malloc, __errno_location
 
 	ft_strdup:
 		xor rcx, rcx;				initialised index 0
@@ -26,7 +26,7 @@ section .text
 		inc rcx
 		jmp .len_str
 
-	.new_str	;					create a memory case for the new string
+	.new_str:	;					create a memory case for the new string
 		inc rcx
 		mov rdi, rcx
 		call malloc
@@ -38,7 +38,7 @@ section .text
 	
 	.cpy_str:	;					copy the string in new emplacement memory
 		mov al, [rsi + rcx];		copy the caracter in a tmp
-		mov [rdi + rcx], al			copy the caracter a the new emplacement
+		mov [rdi + rcx], al;			copy the caracter a the new emplacement
 
 		cmp al, 0;					watch if it's not the end
 		je .return
@@ -46,10 +46,12 @@ section .text
 		jmp .cpy_str
 
 	.error:;						error if malloc failed to not enough space
-		mov dword [rel errno], 12
+		mov dword [rel __errno_location], 12
 		xor rax, rax
 		ret
 	
 	.return:
 		mov rax, rdi
 		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

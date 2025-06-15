@@ -12,12 +12,14 @@
 
 bits 64
 
-section .bss ;				data non initialised
-	buffer resb 1024;			buffer tampon
+; need an place a pointer to the emplacement to write in
+; first argument is the fd he read
+; second the pointer to the table or string
+; third is the size of this pointer/emplacement
 
 section .text
 	global	ft_read
-	extern errno;					variable in libc
+	extern __errno_location;					variable in libc
 
 	ft_read:
 		cmp rdx, 0;				check if rdx size of octed need to read different of 0
@@ -29,10 +31,9 @@ section .text
 
 	.safe_len:
 		mov rax, 0 ;			system call 0 = read
-		mov rsi, buffer;		rsi point to buffer tampon
 		syscall
 
-		cmp rax, 0;			test if result of rax equal or less than -1
+		test rax, rax;			test if result of rax equal or less than -1
 		jl .error;			if rax less than 0 do no_error if not go to error
 
 		mov byte [rsi + rax], 0;
@@ -41,10 +42,14 @@ section .text
 	.error:
 		neg eax;				errno = -eax
 		mov edi, eax
-		mov [rel errno], edi;
+		call __errno_location
+		mov [rax], edi;
+
 		mov rax, -1
 		ret
 
 	.end_function:
 		xor rax, rax
 		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

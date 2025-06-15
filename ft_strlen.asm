@@ -12,6 +12,8 @@
 
 bits 64
 
+; calculate the len of the string
+
 section .text ;						excutable code
 	global ft_strlen
 
@@ -34,3 +36,5 @@ section .text ;						excutable code
 	.null_pointer:
 		mov rax, -1
 		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

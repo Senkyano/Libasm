@@ -14,6 +14,7 @@ bits 64
 
 ; rdi pointer first string
 ; rsi pointer second string
+;	compare the first string and the second
 
 global ft_strcmp
 	ft_strcmp:
@@ -41,3 +42,4 @@ global ft_strcmp
 		sub eax, ebx
 		ret
 
+section .note.GNU-stack noalloc noexec nowrite progbits

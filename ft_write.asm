@@ -15,9 +15,11 @@ bits 64
 ;1	sys_write	unsigned int fd	const char *buf	size_t count
 ; tout est deja envoye dans les registre adequat suivant la norme de c
 
+;	write in the fd
+
 section .text ;				section excutable code
 	global ft_write
-	extern errno	;			variable in libc
+	extern __errno_location	;			variable in libc
 
 	ft_write:
 		mov rax, 1
@@ -28,10 +30,13 @@ section .text ;				section excutable code
 
 		neg rax
 		mov rdi, rax ;				to not suppress data be side rax
-		mov [rel errno], edi; 		passer en 32 bits
+		call __errno_location
+		mov [rax], edi; 		passer en 32 bits
 
 		mov rax, -1; Error
 		ret
 
 	.no_error:; 					return if success
 		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits
