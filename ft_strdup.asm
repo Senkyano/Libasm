@@ -46,7 +46,9 @@ section .text
 		jmp .cpy_str
 
 	.error:;						error if malloc failed to not enough space
-		mov dword [rel __errno_location], 12
+		mov edi, 12
+		call __errno_location
+		mov [rax], edi;				rax is the pointer of errno from __errno_location
 		xor rax, rax
 		ret
 	
