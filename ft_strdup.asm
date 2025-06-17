@@ -38,7 +38,7 @@ section .text
 	
 	.cpy_str:	;					copy the string in new emplacement memory
 		mov al, [rsi + rcx];		copy the caracter in a tmp
-		mov [rdi + rcx], al;			copy the caracter a the new emplacement
+		mov [rdi + rcx], al;		copy the caracter a the new emplacement
 
 		cmp al, 0;					watch if it's not the end
 		je .return
