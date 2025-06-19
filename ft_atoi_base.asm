@@ -57,20 +57,31 @@ section .text
 		neg r11
 		mov r10, 1
 		mov rcx, 1
+		mov r13, r12
+		sub 1, r13
 
 	.len_number:
-		mov rax, r11
-		cmp rax, 0
-		je .malloc_string
-
 		xor rdx, rdx
-		div r12
-		mov r11, rax
-		push rdx
+		mov rax, r11
+		cmp rax, r13
+		jl .malloc_string
+
+		div r12;							len of the base to divided working_number
+		mov r11, rax;						quotion of division
+		push rdx;							reste of division
 		inc rcx
 		jmp .len_number
 
 	.malloc_string:
+		div r12
+		push rdx
+		inc rcx
+		xor rdx, rdx
+		mov rdi, rcx
+		call malloc
+
+		test rax, rax
+		je .malloc_fail
 
 ; 									error
 	.malloc_fail:
