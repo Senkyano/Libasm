@@ -121,7 +121,6 @@ section .text
 		mov [rax + rcx], bl
 		jmp .fill_negatif
 
-
 	.end:
 		ret
 
