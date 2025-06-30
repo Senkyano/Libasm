@@ -10,6 +10,18 @@
 ;#                                                                              #
 ;# **************************************************************************** #
 
+
+;| Registre ;| Usage                                                        |
+;| -------- ;| ------------------------------------------------------------ |
+;| `rdi`    ;| base string pour `ft_strlen`                                 |
+;| `rsi`    ;| base string d'origine                                        |
+;| `r11`    ;| working\_number                                              |
+;| `r10`    ;| 0 = positif, 1 = négatif                                     |
+;| `r12`    ;| len de la base                                               |
+;| `rcx`    ;| compteur pour malloc (len chaîne + signe éventuel)           |
+;| `rdx`    ;| reste de la division (à push pour construction de la chaîne) |
+
+
 bits 64
 
 section .text
@@ -72,7 +84,7 @@ section .text
 		inc rcx
 		jmp .len_number
 
-	.malloc_string:
+	.malloc_string:;						String is malloc
 		div r12
 		push rdx
 		inc rcx
@@ -80,9 +92,43 @@ section .text
 		mov rdi, rcx
 		call malloc
 
-		test rax, rax
+		test rax, rax;						Know if the pointer is null or not
 		je .malloc_fail
 
+		; ici je devais faire quoi deja
+		; fill the string with value
+
+		mov [rax + rcx], 0;					place 'null' at the end
+
+		cmp	r10, 1
+		je .fill_negatif
+;											need to decrement before placing the next
+	.fill_positif:
+		dec rcx
+		cmp rcx, 0
+		je	.end:
+		pop	rdx
+		mov bl, [rsi + rdx]
+		mov [rax + rcx], bl
+		jmp .fill_positif
+
+	.fill_negatif:
+		dec rcx
+		cmp rcx, 1
+		je	.end_negatif
+		pop rdx
+		mov bl, [rsi + rdx]
+		mov [rax + rcx], bl
+		jmp .fill_negatif
+
+
+	.end:
+		ret
+
+	.end_negatif:
+		dec rcx
+		mov [rax + rcx], '-'
+		jmp	.end
 ; 									error
 	.malloc_fail:
 		mov edi, 12;						ERROR Malloc not enough space
