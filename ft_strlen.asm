@@ -14,7 +14,7 @@ bits 64
 
 ; calculate the len of the string
 
-section .text ;						excutable code
+section .text
 	global ft_strlen
 
 	; Function ft_strlen
@@ -22,16 +22,34 @@ section .text ;						excutable code
 		cmp rdi, 0
 		je .null_pointer
 
-		xor rax, rax; 				Initialised registre rax to 0
+		xor rax, rax; 				initialised compteur
 
-	.loop:
-		cmp	byte [rdi + rax], 0; 	Compare the pointer + index to compare if this bytes equal NULL or 0
-		je	.return; 					if is this equal go to return
-		inc	rax; 					increment len of the string with registre
-		jmp	.loop; 					go to .loop
+	.align_loop:
+		mov rdi, [rdi + rax]; read 8 bytes
+		mov rcx, rdx
 
-	.return:
-		ret ; 						return
+		sub rcx, 0x0101010101010101
+		not rdx
+		and rdx, 0x8080808080808080
+		jnz .find_zero
+
+		add rax, 8
+		jmp .align_loop
+
+	.find_zero:
+		mov rcx, rdi
+		add rcx, rax
+		xor rdx, rdx
+
+	.byte_loop:
+		cmp byte [rcx + rdx], 0
+		je .done
+		inc rdx
+		jmp .byte_loop
+
+	.done:
+		add rax, rdx
+		ret
 
 	.null_pointer:
 		mov rax, -1

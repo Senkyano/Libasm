@@ -19,7 +19,7 @@ bits 64
 
 section .text ;				section excutable code
 	global ft_write
-	extern __errno_location	;			variable in libc
+	extern __errno_location	;			function extern
 
 	ft_write:
 		mov rax, 1
@@ -30,8 +30,12 @@ section .text ;				section excutable code
 
 		neg rax
 		mov rdi, rax ;				to not suppress data be side rax
+
+		sub rsp, 8;					Align the stack call function c
 		call __errno_location
-		mov [rax], edi; 		passer en 32 bits
+		add rsp, 8;					restaure the stack
+
+		mov [rax], edi; 			passer en 32 bits
 
 		mov rax, -1; Error
 		ret

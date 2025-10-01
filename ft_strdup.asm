@@ -11,6 +11,7 @@
 ;# **************************************************************************** #
 
 bits 64
+; il faut que j'alligne la stack a l'appel dune fonction en c
 
 section .text
 	global	ft_strdup
@@ -28,8 +29,10 @@ section .text
 
 	.new_str:	;					create a memory case for the new string
 		inc rcx
+		sub rsp, 8
 		mov rdi, rcx
 		call malloc
+		add rsp, 8
 
 		test rax, rax
 		je .error
