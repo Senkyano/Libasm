@@ -22,37 +22,16 @@ section .text
 		cmp rdi, 0
 		je .null_pointer
 
-		xor rax, rax; 				initialised compteur
-
-	.align_loop:
-		mov rdi, [rdi + rax]; read 8 bytes
-		mov rcx, rdx
-
-		sub rcx, 0x0101010101010101
-		not rdx
-		and rdx, 0x8080808080808080
-		jnz .find_zero
-
-		add rax, 8
-		jmp .align_loop
-
-	.find_zero:
-		mov rcx, rdi
-		add rcx, rax
-		xor rdx, rdx
-
-	.byte_loop:
-		cmp byte [rcx + rdx], 0
+		xor rax, rax
+	.loop:
+		cmp byte [rdi + rax], 0
 		je .done
-		inc rdx
-		jmp .byte_loop
-
+		inc rax
+		jmp .loop
 	.done:
-		add rax, rdx
 		ret
-
-	.null_pointer:
-		mov rax, -1
-		ret
+		.null_pointer:
+			mov rax, 0
+			ret
 
 section .note.GNU-stack noalloc noexec nowrite progbits

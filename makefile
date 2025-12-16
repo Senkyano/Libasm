@@ -33,6 +33,7 @@ clean:
 	rm -fr *.o
 
 fclean: clean
-	rm -fr $(OBJDIR)/$(NAME)
+	rm -fr $(OBJDIR)
+	rm -fr $(NAME)
 
 re: fclean all
