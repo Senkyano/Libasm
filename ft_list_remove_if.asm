@@ -24,8 +24,7 @@ section .text
 	global	ft_list_remove_if
 
 	ft_list_remove_if:
-		mov r8, rdi;				first element of list
-		mov r9, rsi;				function to call
+
 
 	.loop_condition:
 

@@ -25,15 +25,17 @@ section	.text
 	global	ft_list_size
 
 	ft_list_size:
-		xor rcx, rcx
+		xor rax, rax
+		test rdi, rdi
+		jz	.done
 
 	.loop_count:
-		test rdi, rdi
-		jz	.null_pointer
-		inc rcx
+		inc rax
 		mov rdi, [rdi + 8]
-		jmp .loop_count
+		test rdi, rdi
+		jnz .loop_count
 
-	.null_pointer:
-		mov rax, rcx
+	.done:
 		ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits
