@@ -31,7 +31,7 @@ section .text
 	.done:
 		ret
 		.null_pointer:
-			mov rax, 0
+			xor rax, rax
 			ret
 
 section .note.GNU-stack noalloc noexec nowrite progbits
