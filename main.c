@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 23:29:21 by rihoy             #+#    #+#             */
-/*   Updated: 2025/12/17 15:11:03 by rihoy            ###   ########.fr       */
+/*   Updated: 2025/12/19 14:14:36 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,5 @@ int main(void) {
 	printf("%ld byte read\n", ft_read(STDOUT_FILENO, p, sizeof(p) - 1));
 	printf("%s\n", p);
 	printf("TEST completed\n");
-
-	// char *ok = NULL;
-	// ok = ft_atoi_base(41,"011");
-	// if (!ok)
-	// 	printf("%s\n", ok);
-	// free(ok);
 	return (1);
 }
