@@ -1,7 +1,8 @@
 NAME = first_step_ASM
+NAME_BONUS = first_step_ASM_Bonus
 LDFLAGS = -no-pie
 
-SRCS_C = main.c
+# SRCS_C = main.c
 OBJS_C = $(SRCS_C:.c=.o)
 
 SRCS_ASM = ft_strlen.asm ft_write.asm ft_read.asm ft_strcmp.asm ft_strcpy.asm ft_strdup.asm
@@ -16,18 +17,18 @@ OBJS_BONUS = $(addprefix $(OBJDIR)/, $(SRCS_ASM_BONUS:.asm=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	gcc $(LDFLAGS) $(OBJS) -o $(NAME)
+	gcc $(LDFLAGS) $(OBJS) main.c -o $(NAME)
 
 bonus : $(OBJS_ALL)
-	gcc $(LDFLAGS) $(OBJS_ALL) -o $(NAME)
+	gcc $(LDFLAGS) $(OBJS_ALL) main_bonus.c -o $(NAME_BONUS)
 
 $(OBJDIR)/%.o : %.asm
 	mkdir -p $(OBJDIR)
 	nasm -f elf64 $< -o $@
 
-$(OBJDIR)/%.o : %.c
-	mkdir -p $(OBJDIR)
-	gcc -c $< -o $@
+# $(OBJDIR)/%.o : %.c
+# 	mkdir -p $(OBJDIR)
+# 	gcc -c $< -o $@
 
 clean:
 	rm -fr *.o

@@ -23,6 +23,7 @@ section .text
 		test	rsi, rsi;	test if base is null
 		jz	.error
 
+	.push_register:
 		push	rbx;		saving non-volatil register
 		push	r12;
 		push	r13;
@@ -32,6 +33,35 @@ section .text
 		mov		rbx,	rdi;		int
 		mov		r12,	rsi;		base
 
+		xor		rcx,	rcx
+	
+	.check_base_loop:
+		movzx	rax, byte [r12 + rcx]
+		test	al,		al
+		jz		.base_valid
+
+		cmp		al,	'+'
+		je		.error_pop
+		cmp		al, '-'
+		je		.error_pop
+		cmp		al, ' '
+		je		.error_pop
+		cmp		al, 9
+		je		.error_pop
+		cmp		al, 10
+		je		.error_pop
+		cmp		al, 11
+		je		.error_pop
+		cmp		al, 12
+		je		.error_pop
+		cmp		al, 13
+		je		.error_pop
+
+		xor		r8, r8
+
+	.check_duplicate:
+
+	.base_valid:
 	;		calcul base length
 		mov		rdi,	rsi
 		call	ft_strlen
@@ -41,8 +71,8 @@ section .text
 
 	;		gestion signe
 		xor		r15,	r15;		init 0 = positif
-		cmp		rbx,	2147483648
-		jge		.calc_len
+		cmp		rbx,	2147483647
+		jge		.int_max
 		cmp		rbx,	0
 		jge		.calc_len
 		mov		r15,	1;			r15 = 1 = negatif
