@@ -10,12 +10,18 @@ bits 64
 ;		struct s_node	*next; in address 8 octets (+8offset)
 ; }					t_node;
 
+;	rbx = function
+;	r12 = list
+;
+
 section .text
 	global	ft_list_sort
 
 	ft_list_sort:
 		test	rdi,	rdi
-		jz		.error
+		jz		.done
+		test	rsi,	rsi
+		jz		.done
 
 		push	rbx;
 		push	r12;
@@ -23,6 +29,8 @@ section .text
 		push	r14
 		push	r15
 
+		mov		rbx,	rsi
+		mov		r12,	rdi
 
 	.pop_done:
 		pop		r15
