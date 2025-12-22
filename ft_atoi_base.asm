@@ -34,9 +34,10 @@ section .text
 		mov		r12,	rsi;		base
 
 		xor		rcx,	rcx
-	
+		xor		r8,		r8
+
 	.check_base_loop:
-		movzx	rax, byte [r12 + rcx]
+		movzx	rax,	byte [r12 + rcx]
 		test	al,		al
 		jz		.base_valid
 
@@ -57,9 +58,17 @@ section .text
 		cmp		al, 13
 		je		.error_pop
 
-		xor		r8, r8
+		inc		rcx
+		mov		r8, rcx
 
 	.check_duplicate:
+		movzx	r10,	byte [r12 + r8]
+		test	r10,	r10
+		jz		.check_base_loop
+		cmp		r10,	rax
+		je		.error_pop
+		inc		r8
+		jmp		.check_duplicate
 
 	.base_valid:
 	;		calcul base length

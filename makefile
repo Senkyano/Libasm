@@ -6,7 +6,7 @@ LDFLAGS = -no-pie
 OBJS_C = $(SRCS_C:.c=.o)
 
 SRCS_ASM = ft_strlen.asm ft_write.asm ft_read.asm ft_strcmp.asm ft_strcpy.asm ft_strdup.asm
-SRCS_ASM_BONUS = ft_atoi_base.asm
+SRCS_ASM_BONUS = ft_atoi_base.asm ft_list_push_front.asm ft_list_size.asm
 
 OBJS_ALL = $(OBJS) $(OBJS_BONUS)
 
@@ -36,5 +36,6 @@ clean:
 fclean: clean
 	rm -fr $(OBJDIR)
 	rm -fr $(NAME)
+	rm -fr $(NAME_BONUS)
 
 re: fclean all
