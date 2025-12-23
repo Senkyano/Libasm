@@ -10,8 +10,6 @@ section .text
 		jz		.done
 		test	rdx,	rdx
 		jz		.done
-		test	rcx,	rcx
-		jz		.done
 
 		push	rbx
 		push	r12
@@ -26,7 +24,7 @@ section .text
 
 	.loop_to_end:
 		mov		r15,	[rbx]
-		test	r15,	r15;	test la node
+		test	r15,	r15;	test la fin de node
 		jz		.pop_done
 
 		mov		rdi,	[r15];	data
@@ -35,8 +33,22 @@ section .text
 		test	eax,	eax
 		jnz		.skip_node
 
+		mov		r8,		[r15 + 8]
+		mov		[rbx],	r8
+
+		test	r14,	r14
+		jz		.no_free_funct
+
+		mov		rdi,	[r15]
+		call	r14
+
+	.no_free_funct:
+		mov		rdi,	r15
+		call	free	wrt ..plt
+		jmp		.loop_to_end
+
 	.skip_node:
-		
+		lea		rbx,	[r15 + 8]
 		jmp		.loop_to_end
 
 	.pop_done:
