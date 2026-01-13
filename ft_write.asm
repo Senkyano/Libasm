@@ -1,10 +1,4 @@
-
 bits 64
-;					rdi				rsi				rdx 
-;1	sys_write	unsigned int fd	const char *buf	size_t count
-; tout est deja envoye dans les registre adequat suivant la norme de c
-
-;	write in the fd
 
 section .text ;				section excutable code
 	global ft_write

@@ -1,7 +1,4 @@
-
 bits 64
-
-; calculate the len of the string
 
 section .text
 	global ft_strlen

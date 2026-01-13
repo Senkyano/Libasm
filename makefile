@@ -1,5 +1,5 @@
-NAME = first_step_ASM
-NAME_BONUS = first_step_ASM_Bonus
+NAME_LIB = libasm.a
+NAME_LIB_BONUS = libasm_bonus.a
 LDFLAGS = -no-pie
 
 # SRCS_C = main.c
@@ -14,28 +14,48 @@ OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS_ASM:.asm=.o) $(SRCS_C:.c=.o))
 OBJS_BONUS = $(addprefix $(OBJDIR)/, $(SRCS_ASM_BONUS:.asm=.o))
 
-all: $(NAME)
+ASM = nasm
+ASMFLAGS = -f elf64
+AR = ar
+ARFLAGS = rcs
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
 
-$(NAME): $(OBJS)
-	gcc $(LDFLAGS) $(OBJS) main.c -o $(NAME)
+TEST = test_mandatory
+TEST_BONUS = test_bonus
 
-bonus : $(OBJS_ALL)
-	gcc $(LDFLAGS) $(OBJS_ALL) main_bonus.c -o $(NAME_BONUS)
+all: $(NAME_LIB)
+
+$(NAME_LIB): $(OBJS)
+	$(AR) $(ARFLAGS) $(NAME_LIB) $(OBJS)
+
+bonus : $(NAME_LIB_BONUS)
+
+$(NAME_LIB_BONUS) : $(OBJS_ALL)
+	$(AR) $(ARFLAGS) $(NAME_LIB_BONUS) $(OBJS_ALL)
+
+test : $(NAME_LIB)
+	$(CC) $(CFLAGS) main.c $(LDFLAGS) -L. -lasm -o $(TEST)
+	./$(TEST)
+
+test_bonus : $(NAME_LIB_BONUS)
+	$(CC) $(CFLAGS) main_bonus.c $(LDFLAGS) -L. -lasm_bonus -o $(TEST_BONUS)
+	./$(TEST_BONUS)
 
 $(OBJDIR)/%.o : %.asm
 	mkdir -p $(OBJDIR)
 	nasm -f elf64 $< -o $@
 
-# $(OBJDIR)/%.o : %.c
-# 	mkdir -p $(OBJDIR)
-# 	gcc -c $< -o $@
-
 clean:
+	rm -fr $(OBJDIR)
 	rm -fr *.o
 
 fclean: clean
-	rm -fr $(OBJDIR)
-	rm -fr $(NAME)
-	rm -fr $(NAME_BONUS)
+	rm -f $(NAME_LIB)
+	rm -f $(NAME_LIB_BONUS)
+	rm -f $(TEST)
+	rm -f $(TEST_BONUS)
 
 re: fclean all
+
+.PHONY: all bonus clean fclean re

@@ -1,19 +1,4 @@
-
 bits 64
-
-;	Faire le check de la base si il y a des doublons ou pas ?
-
-;	rbx,	number int
-;	r12,	string base
-;	r13,	base length
-;	r14,	index
-;	r15,	bool negatif
-;	r10,	start new_string
-;	r9,		temp caractere
-
-;	division
-;		les restes vont dans rdx
-;		les quotients vont dans rax
 
 section .text
 	global	ft_atoi_base

@@ -1,10 +1,4 @@
-
 bits 64
-
-; need an place a pointer to the emplacement to write in
-; first argument is the fd he read
-; second the pointer to the table or string
-; third is the size of this pointer/emplacement
 
 section .text
 	global	ft_read

@@ -1,9 +1,4 @@
-
 bits 64
-
-; first string is the destination
-; second string sources
-; to use properly you need to alloc the first string with equal octet of the second
 
 section .text
 	global ft_strcpy

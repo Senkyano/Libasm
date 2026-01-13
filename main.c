@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 23:29:21 by rihoy             #+#    #+#             */
-/*   Updated: 2025/12/19 14:14:36 by rihoy            ###   ########.fr       */
+/*   Updated: 2026/01/13 17:20:40 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ int main(void) {
 	printf("%d = k - o\n", ft_strcmp("ok\n", "ook\n"));
 
 	printf("TEST ft_strcpy\n\n");
-	char l[10];
+	char l[10] = {'\0'};
 	char k[10] = {'o', 'k' ,'f', '\0'};
 	
+	printf("base k = %s\nl = %s\n", k, l);
 	ft_strcpy(l, k);
-	printf("%s\n", l);
+	printf("output = %s\n", l);
 	
 	printf("TEST ft_strdup\n\n");
 	char *le = NULL;

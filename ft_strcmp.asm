@@ -1,9 +1,4 @@
-
 bits 64
-
-; rdi pointer first string
-; rsi pointer second string
-;	compare the first string and the second
 
 global ft_strcmp
 	ft_strcmp:

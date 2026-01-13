@@ -1,11 +1,4 @@
-
 bits 64
-
-; typedef struct	s_node
-; {
-;		void			*data; in the 8 first octets
-;		struct s_node	*next; in address 8 octets (+8offset)
-; }					t_node;
 
 section .text
 	global	ft_list_push_front
