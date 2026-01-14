@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 00:19:16 by rihoy             #+#    #+#             */
-/*   Updated: 2025/12/17 16:43:24 by rihoy            ###   ########.fr       */
+/*   Updated: 2026/01/14 21:33:47 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct s_list
 
 
 // Bonus
-char	*ft_atoi_base(int number, char *base);
+char	*ft_itoa(int number, char *base);
+int		*ft_atoi_base(char* number, char *base);
 int		ft_list_size(t_list *begin_list);
 void	ft_list_push_front(t_list **begin_list, void *data);
 void	ft_list_sort(t_list **begin_list, int (*cmp)());
