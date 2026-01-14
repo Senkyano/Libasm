@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 23:29:21 by rihoy             #+#    #+#             */
-/*   Updated: 2025/12/22 19:21:01 by rihoy            ###   ########.fr       */
+/*   Updated: 2026/01/14 18:12:16 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,24 @@ int main(void) {
 		printf("pointer = %p , string = %s\n", test, test);
 		free(test);
 	}
+	test = ft_atoi_base(-2147483647, "0123");
+	printf("int = %d, base = %s\n", -2147483647, "0123");
+	printf("pointeur = %p\n", test);
+	if (test) {
+		printf("pointer = %p , string = %s\n", test, test);
+		free(test);
+	}
 	test = ft_atoi_base(2147483648, "0123456789");
 	printf("int = %ld, base = %s\n", 2147483648, "0123456789");
 	if (test) {
 		printf("pointer = %p , string = %s\n",test, test);
+		free(test);
+	}
+	test = ft_atoi_base(2147483647, "0123456789");
+	printf("int = %d, base = %s\n", 2147483647, "0123456789");
+	if (test) {
+		printf("pointer = %p , string = %s\n",test, test);
+		printf("resultat = 2147483647\n");
 		free(test);
 	}
 	test = ft_atoi_base(123, "0");
@@ -66,7 +80,7 @@ int main(void) {
 	t_list	**l_test;
 	l_test = NULL;
 
-	printf("Pushing a NULL data while **l_test is NULL");
+	printf("Pushing a NULL data while **l_test is NULL\n");
 	ft_list_push_front(l_test, NULL);
 	printf("pointeur = %p\n", l_test);
 	l_test = malloc(sizeof(l_test));

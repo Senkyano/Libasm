@@ -3,3 +3,7 @@
 first_step_ASM
 first_step_ASM_Bonus
 obj
+test_mandatory
+test_bonus
+libasm.a
+libasm_bonus.a

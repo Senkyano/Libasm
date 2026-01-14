@@ -15,7 +15,7 @@ section .text ;				section excutable code
 		mov rdi, rax ;				to not suppress data be side rax
 
 		sub rsp, 8;					Align the stack call function c
-		call __errno_location
+		call __errno_location	wrt ..plt
 		add rsp, 8;					restaure the stack
 
 		mov [rax], edi; 			passer en 32 bits

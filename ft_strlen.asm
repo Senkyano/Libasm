@@ -16,8 +16,9 @@ section .text
 		jmp .loop
 	.done:
 		ret
-		.null_pointer:
-			xor rax, rax
-			ret
+
+	.null_pointer:
+		xor rax, rax
+		ret
 
 section .note.GNU-stack noalloc noexec nowrite progbits

@@ -58,7 +58,7 @@ section .text
 	.base_valid:
 	;		calcul base length
 		mov		rdi,	rsi
-		call	ft_strlen
+		call	ft_strlen wrt ..plt
 		cmp		rax, 2
 		jl		.error_pop
 		mov		r13,	rax;		base length

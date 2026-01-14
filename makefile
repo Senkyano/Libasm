@@ -1,6 +1,5 @@
 NAME_LIB = libasm.a
 NAME_LIB_BONUS = libasm_bonus.a
-LDFLAGS = -no-pie
 
 # SRCS_C = main.c
 OBJS_C = $(SRCS_C:.c=.o)
@@ -24,6 +23,18 @@ CFLAGS = -Wall -Werror -Wextra
 TEST = test_mandatory
 TEST_BONUS = test_bonus
 
+ECHO = echo
+
+C_B = \033[0;30m
+C_R = \033[1;31m
+C_G = \033[1;32m
+C_Y = \033[0;33m
+C_BU = \033[0;34m
+C_M = \033[0;35m
+C_C = \033[0;36m
+C_W = \033[0;37m
+RESET = \033[0m
+
 all: $(NAME_LIB)
 
 $(NAME_LIB): $(OBJS)
@@ -35,16 +46,18 @@ $(NAME_LIB_BONUS) : $(OBJS_ALL)
 	$(AR) $(ARFLAGS) $(NAME_LIB_BONUS) $(OBJS_ALL)
 
 test : $(NAME_LIB)
-	$(CC) $(CFLAGS) main.c $(LDFLAGS) -L. -lasm -o $(TEST)
+	$(CC) $(CFLAGS) main.c -L. -lasm -o $(TEST)
 	./$(TEST)
 
 test_bonus : $(NAME_LIB_BONUS)
-	$(CC) $(CFLAGS) main_bonus.c $(LDFLAGS) -L. -lasm_bonus -o $(TEST_BONUS)
+	$(CC) $(CFLAGS) main_bonus.c -L. -lasm_bonus -o $(TEST_BONUS)
 	./$(TEST_BONUS)
 
 $(OBJDIR)/%.o : %.asm
-	mkdir -p $(OBJDIR)
-	nasm -f elf64 $< -o $@
+	@mkdir -p $(OBJDIR)
+	nasm -f elf64 $< -o $@ && \
+		$(ECHO) "$(C_G)[OK]$(RESET) Compiled $<" || \
+		($(ECHO) "$(C_R)[KO]$(RESET) Failed $<" && exit 1)
 
 clean:
 	rm -fr $(OBJDIR)

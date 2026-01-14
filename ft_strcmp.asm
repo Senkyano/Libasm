@@ -11,8 +11,6 @@ global ft_strcmp
 
 		cmp	al, 0
 		je	.end_function ; 							Jump if equal 0 to end_function
-		cmp	bl, 0
-		je	.end_function
 		cmp al, bl
 		jne	.end_function
 
