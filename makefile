@@ -5,7 +5,7 @@ NAME_LIB_BONUS = libasm_bonus.a
 OBJS_C = $(SRCS_C:.c=.o)
 
 SRCS_ASM = ft_strlen.asm ft_write.asm ft_read.asm ft_strcmp.asm ft_strcpy.asm ft_strdup.asm
-SRCS_ASM_BONUS = ft_atoi_base.asm ft_list_push_front.asm ft_list_size.asm
+SRCS_ASM_BONUS = ft_atoi_base.asm ft_list_push_front.asm ft_list_size.asm ft_itoa_base.asm
 
 OBJS_ALL = $(OBJS) $(OBJS_BONUS)
 

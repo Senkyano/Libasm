@@ -1,10 +1,10 @@
 bits 64
 
 section .text
-	global	ft_itoa
+	global	ft_itoa_base
 	extern	malloc, free, ft_strlen, __errno_location;		include external function
 
-	ft_itoa:
+	ft_itoa_base:
 		test	rsi, rsi;	test if base is null
 		jz	.error
 

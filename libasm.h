@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 00:19:16 by rihoy             #+#    #+#             */
-/*   Updated: 2026/01/14 21:33:47 by rihoy            ###   ########.fr       */
+/*   Updated: 2026/01/18 15:35:54 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stddef.h>
+
+# define BLK "\e[0;90m"
+# define RED "\e[1;31m"
+# define GR "\e[1;92m"
+# define Y "\e[1;93m"
+# define BLU "\e[1;94m"
+# define PUR "\e[1;95m"
+# define CY "\e[1;96m"
+# define WH "\e[0;97m"
+# define RST "\e[0m"
 
 ssize_t ft_write(int fd, const char *str, size_t count);
 ssize_t ft_read(int fd, void *buffer, size_t count);
@@ -31,8 +41,8 @@ typedef struct s_list
 
 
 // Bonus
-char	*ft_itoa(int number, char *base);
-int		*ft_atoi_base(char* number, char *base);
+char	*ft_itoa_base(int number, char *base);
+int		ft_atoi_base(char* number, char *base);
 int		ft_list_size(t_list *begin_list);
 void	ft_list_push_front(t_list **begin_list, void *data);
 void	ft_list_sort(t_list **begin_list, int (*cmp)());
