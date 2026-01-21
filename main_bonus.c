@@ -6,7 +6,7 @@
 /*   By: rihoy <rihoy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 23:29:21 by rihoy             #+#    #+#             */
-/*   Updated: 2026/01/19 18:36:37 by rihoy            ###   ########.fr       */
+/*   Updated: 2026/01/21 14:17:50 by rihoy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 #include <errno.h>
 #include <string.h>
 #include "libasm.h"
+
+int	cmp_fnct(void 	*data_ref, void *data) {
+	if (data_ref == data)
+		return (0);
+	return (1);
+}
 
 int main(void) {
 	printf("TEST ATOI\n");
@@ -58,11 +64,15 @@ int main(void) {
 
 
 	t_list	*list_p;
+	t_list	boucle;
+	t_list	second_node;
+	second_node.next = &boucle;
+	boucle.next = &second_node;
 	list_p = malloc(sizeof(t_list));
 	list_p->data = NULL;
 	list_p->next = NULL;
-	
 	printf(CY"result size = %d"GR" expected = 1\n"RST,ft_list_size(list_p));
+	printf(CY"result size = %d"GR" expected = 2\n"RST,ft_list_size(&boucle));
 	printf("%p\n", list_p->data);
 	for (int i = 0; i < 10; i++) {
 		if (i % 2 == 1)
@@ -72,9 +82,17 @@ int main(void) {
 	}
 	printf(CY"result size = %d"GR" expected = 11\n"RST,ft_list_size(list_p));
 	t_list	*tmp2;
+
+	tmp2 = list_p;
+	while (tmp2) {
+		printf(Y"%p\n"RST, tmp2->data);
+		tmp2 = tmp2->next;		
+	}
+	printf(BLU"call ft_list_remove_if\n");
+	ft_list_remove_if(&list_p, NULL, &cmp_fnct, NULL);
 	while (list_p) {
 		tmp2 = list_p;
-		printf("%p\n", tmp2->data);
+		printf(GR"%p\n"RST, tmp2->data);
 		list_p = list_p->next;
 		free(tmp2);
 	}
