@@ -4,7 +4,9 @@ section .text
 	global ft_strcpy
 
 	ft_strcpy:
-		xor rcx, rcx;					initialised index to 0
+		xor		rcx,	rcx;					initialised index to 0
+		test	rsi,	rsi
+		jz		.done
 
 	.loop_cpy:
 		cmp	byte [rsi + rcx], 0;				Compare pointer index char if it not 0
@@ -16,6 +18,7 @@ section .text
 
 	.return:
 		mov byte [rdi + rcx], 0;				set the last element at null
+	.done:
 		mov rax, rdi;							rax equal pointer of dest
 		ret
 
